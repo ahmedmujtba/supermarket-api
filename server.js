@@ -1,12 +1,12 @@
-import express from "express";
-import dotenv from "dotenv";
-import connectDatabase from "./config/mongoDb.js";
-import ImportData from "./dataImport.js";
-import productRouter from "./routes/Product.Routes.js";
-import { errorHandler, notFound } from "./middleware/Error.js";
-import userRouter from "./routes/User.Routes.js";
-import shoppingListRouter from "./routes/ShoppingList.Routes.js";
-import cors from "cors";
+const express = require("express");
+const dotenv = require("dotenv");
+const connectDatabase = require("./config/mongoDb.js");
+const ImportData = require("./dataImport.js");
+const productRouter = require("./routes/Product.Routes.js");
+const { errorHandler, notFound } = require("./middleware/Error.js");
+const userRouter = require("./routes/User.Routes.js");
+const shoppingListRouter = require("./routes/ShoppingList.Routes.js");
+const cors = require("cors");
 
 dotenv.config();
 connectDatabase();
@@ -32,4 +32,4 @@ const PORT = process.env.PORT || 9090;
 
 app.listen(PORT, console.log(`server is running on port ${PORT}...`));
 
-export default app;
+module.exports = app;
