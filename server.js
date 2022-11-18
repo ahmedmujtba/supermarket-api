@@ -6,11 +6,13 @@ import productRouter from "./routes/Product.Routes.js";
 import { errorHandler, notFound } from "./middleware/Error.js";
 import userRouter from "./routes/User.Routes.js";
 import shoppingListRouter from "./routes/ShoppingList.Routes.js";
+import cors from "cors";
 
 dotenv.config();
 connectDatabase();
 const app = express();
 app.use(express.json());
+app.use(cors());
 
 //API
 app.use("/api/import", ImportData);
@@ -29,3 +31,5 @@ app.get("/", (req, res) => {
 const PORT = process.env.PORT || 9090;
 
 app.listen(PORT, console.log(`server is running on port ${PORT}...`));
+
+export default app;
