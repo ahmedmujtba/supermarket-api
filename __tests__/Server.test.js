@@ -1,5 +1,5 @@
 import request from "supertest";
-import app from "../Server.js";
+import app from "../server.js";
 
 describe("Products", () => {
   describe("/api/products", () => {
