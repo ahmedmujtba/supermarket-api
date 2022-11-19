@@ -1,11 +1,11 @@
 const express = require("express");
 const dotenv = require("dotenv");
-const connectDatabase = require("./config/mongoDb.js");
-const importData = require("./dataImport.js");
-const productRouter = require("./routes/Product.Routes.js");
-const { errorHandler, notFound } = require("./middleware/Error.js");
-const userRouter = require("./routes/User.Routes.js");
-const shoppingListRouter = require("./routes/ShoppingList.Routes.js");
+const connectDatabase = require("./config/mongoDb");
+const importData = require("./dataImport");
+const productRouter = require("./routes/Product.Routes");
+const { errorHandler, notFound } = require("./middleware/Error");
+const userRouter = require("./routes/User.Routes");
+const shoppingListRouter = require("./routes/ShoppingList.Routes");
 const cors = require("cors");
 
 dotenv.config();
