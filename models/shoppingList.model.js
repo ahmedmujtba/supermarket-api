@@ -1,4 +1,4 @@
-import mongoose from "mongoose";
+const mongoose = require("mongoose");
 
 const shoppingListSchema = mongoose.Schema({
   user: { type: mongoose.Schema.Types.ObjectId, require: true, ref: "User" },
@@ -18,4 +18,4 @@ const shoppingListSchema = mongoose.Schema({
 });
 
 const ShoppingList = mongoose.model("Shopping List", shoppingListSchema);
-export default ShoppingList;
+module.exports = ShoppingList;

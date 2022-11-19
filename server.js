@@ -1,7 +1,7 @@
 const express = require("express");
 const dotenv = require("dotenv");
 const connectDatabase = require("./config/mongoDb.js");
-const ImportData = require("./dataImport.js");
+const importData = require("./dataImport.js");
 const productRouter = require("./routes/Product.Routes.js");
 const { errorHandler, notFound } = require("./middleware/Error.js");
 const userRouter = require("./routes/User.Routes.js");
@@ -15,7 +15,7 @@ app.use(express.json());
 app.use(cors());
 
 // //API
-app.use("/api/import", ImportData);
+app.use("/api/import", importData);
 app.use("/api/products", productRouter);
 app.use("/api/users", userRouter);
 app.use("/api/shopping-list/", shoppingListRouter);

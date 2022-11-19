@@ -1,6 +1,6 @@
-import express from "express";
-import asyncHandler from "express-async-handler";
-import ShoppingList from "../models/ShoppingList.model.js";
+const express = require("express");
+const asyncHandler = require("express-async-handler");
+const ShoppingList = require("../models/ShoppingList.model.js");
 
 const shoppingListRouter = express.Router();
 
@@ -39,4 +39,4 @@ shoppingListRouter.get(
   })
 );
 
-export default shoppingListRouter;
+module.exports = shoppingListRouter;
