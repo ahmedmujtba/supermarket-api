@@ -1,6 +1,6 @@
 const express = require("express");
 const dotenv = require("dotenv");
-const connectDatabase = require("./config/mongoDb");
+const connectDatabase = require("./config/mongoDB");
 const importData = require("./dataImport");
 const productRouter = require("./routes/Product.Routes");
 const { errorHandler, notFound } = require("./middleware/Error");
