@@ -1,6 +1,6 @@
 const express = require("express");
 const asyncHandler = require("express-async-handler");
-const User = require("../models/User.Model.js");
+const User = require("../models/user.model.js");
 
 const userRouter = express.Router();
 
@@ -8,8 +8,8 @@ const userRouter = express.Router();
 userRouter.post(
   "/login",
   asyncHandler(async (req, res) => {
-    const { email, password } = req.body;
-    const user = await User.findOne({ email });
+    const { username, password } = req.body;
+    const user = await User.findOne({ username });
 
     if (user && (await user.matchPassword(password))) {
       res.status(200).json({
@@ -32,7 +32,7 @@ userRouter.post(
   "/register",
   asyncHandler(async (req, res) => {
     const { name, username, email, password } = req.body;
-    const userExists = await User.findOne({ email });
+    const userExists = await User.findOne({ username });
     if (userExists) {
       res.status(400);
       throw new Error("User already exists");
@@ -45,12 +45,7 @@ userRouter.post(
     });
 
     if (user) {
-      res.status(201).json({
-        _id: user._id,
-        name: user.name,
-        username: user.username,
-        email: user.email,
-      });
+      res.status(201).json({ message: "User created" });
     } else {
       res.status(400);
       throw new Error("Invalid Info Provided");
@@ -60,9 +55,10 @@ userRouter.post(
 
 //PROFILE
 userRouter.get(
-  "/:id/profile",
+  "/:username/profile",
   asyncHandler(async (req, res) => {
-    const user = await User.findById(req.params.id);
+    const username = req.params.username;
+    const [user] = await User.find({ username });
     if (user) {
       res.status(200).json({
         _id: user._id,
@@ -80,9 +76,11 @@ userRouter.get(
 
 //UPDATE PROFILE
 userRouter.put(
-  "/:id/profile",
+  "/:username/profile",
   asyncHandler(async (req, res) => {
-    const user = await User.findById(req.params.id);
+    const username = req.params.username;
+    const [user] = await User.find({ username });
+
     if (user) {
       if (req.body.name) {
         user.name = req.body.name;

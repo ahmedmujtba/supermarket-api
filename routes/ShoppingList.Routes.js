@@ -1,6 +1,7 @@
 const express = require("express");
 const asyncHandler = require("express-async-handler");
-const ShoppingList = require("../models/ShoppingList.model.js");
+const ShoppingList = require("../models/shoppingList.model.js");
+const User = require("../models/user.model.js");
 
 const shoppingListRouter = express.Router();
 
@@ -8,28 +9,36 @@ const shoppingListRouter = express.Router();
 shoppingListRouter.post(
   "/",
   asyncHandler(async (req, res) => {
-    const listItems = req.body;
+    const { username, ...listItems } = req.body;
 
-    if (listItems && listItems.length === 0) {
-      res.status(400);
-      throw new Error("There are no items in your shopping list");
+    const user = await User.find({ username });
+    if (user.length === 0) {
+      res.status(404);
+      throw new Error("User does not exist");
     } else {
-      const list = new ShoppingList({
-        user: req.body._id,
-        listItems,
-      });
-
-      const createList = await list.save();
-      res.status(201).json(createList);
+      const { name } = listItems;
+      const itemExists = await ShoppingList.find({ name });
+      if (itemExists.length > 0) {
+        res.status(400);
+        throw new Error("Item already exists in your shopping list");
+      } else {
+        const list = new ShoppingList({
+          username,
+          ...listItems,
+        });
+        const createList = await list.save();
+        res.status(201).json(createList);
+      }
     }
   })
 );
 
-//GET SHOPPING LIST BY ID
+//GET SHOPPING LIST BY USERNAME
 shoppingListRouter.get(
-  "/:id",
+  "/:username",
   asyncHandler(async (req, res) => {
-    const list = await ShoppingList.findById(req.params.id).populate("user");
+    const username = req.params.username;
+    const list = await ShoppingList.find({ username });
     if (list) {
       res.status(200).json(list);
     } else {

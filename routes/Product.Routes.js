@@ -1,6 +1,6 @@
 const express = require("express");
 const asyncHandler = require("express-async-handler");
-const Product = require("../models/Products.Model");
+const Product = require("../models/products.model");
 
 const productRouter = express.Router();
 
@@ -19,6 +19,7 @@ productRouter.get(
   asyncHandler(async (req, res) => {
     const product = await Product.findById(req.params.id);
     if (product) {
+      console.log(product);
       res.status(200).json(product);
     } else {
       res.status(404);
